@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Proyect</string>
+    <string name="app_name">Proyecto</string>
+    <string name="app_email">Email</string>
+    <string name="app_password">Password</string>
+    <string name="app_register">Register</string>
+    <string name="app_login">Login</string>
+    <string name="app_loginWithGoogle">Login with Google</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>
