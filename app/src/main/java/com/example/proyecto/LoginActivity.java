@@ -138,9 +138,12 @@ public class LoginActivity extends AppCompatActivity {
                         goMain(email);
                     } else {
                         Log.i("FIREBASE LOGIN", "Login incorrecto", task.getException());
+                        Toast.makeText(LoginActivity.this, "Datos incorrectos", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
+        } else {
+            Toast.makeText(this, "Debes rellenar los 2 campos para continuar", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -158,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
                     } else {
                         Log.i("FIREBASE REGISTER", "Ha ocurrido un error al registrar", task.getException());
-                        Toast.makeText(LoginActivity.this, "Usuario no registrado debido a un error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Error al registrar el usuario", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Proyecto</string>
+    <string name="app_name">Mis ubicaciones</string>
     <string name="app_email">Email</string>
     <string name="app_password">Contraseña</string>
     <string name="app_register">Registrarse</string>
