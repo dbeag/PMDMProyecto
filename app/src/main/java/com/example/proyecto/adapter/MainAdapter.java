@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.proyecto.MapsFragment;
 import com.example.proyecto.ProfileFragment;
 
 public class MainAdapter extends FragmentStateAdapter {
@@ -25,11 +26,14 @@ public class MainAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
+        if (position == 0){
+            return new MapsFragment();
+        }
         return new ProfileFragment();
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 2;
     }
 }
