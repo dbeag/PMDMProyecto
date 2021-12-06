@@ -3,6 +3,7 @@ package com.example.proyecto;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
 
     Button btnRegister, btnLogin, btnLoginWithGoogle;
     EditText etEmail, etPassword;
+    ConstraintLayout authLayout;
+
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -40,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        authLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -47,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        authLayout = findViewById(R.id.authLayout);
         btnRegister = findViewById(R.id.btnRegister);
         btnLogin = findViewById(R.id.btnLogin);
         btnLoginWithGoogle = findViewById(R.id.btnLoginWithGoogle);
@@ -175,6 +180,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sesion = getSharedPreferences("sesion", Context.MODE_PRIVATE);
         String email = sesion.getString("email", null);
         if (email != null) {
+            authLayout.setVisibility(View.INVISIBLE);
             goMain(email);
         }
     }

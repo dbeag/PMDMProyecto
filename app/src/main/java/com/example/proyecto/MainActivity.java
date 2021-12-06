@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.proyecto.adapter.MainAdapter;
@@ -31,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         adapter = new MainAdapter(fragmentManager, getLifecycle());
         viewPager2.setAdapter(adapter);
+
+        Bundle datos = this.getIntent().getExtras();
+        String email = datos.getString("email");
+        SharedPreferences sesion = getSharedPreferences("sesion", Context.MODE_PRIVATE);
+        SharedPreferences.Editor Obj_editor = sesion.edit();
+        Obj_editor.putString("email", email);
+        Obj_editor.apply();
+        Obj_editor.commit();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
