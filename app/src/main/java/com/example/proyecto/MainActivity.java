@@ -16,6 +16,11 @@ public class MainActivity extends AppCompatActivity {
     ViewPager2 viewPager2;
     TabLayout tabLayout;
     MainAdapter adapter;
+    static String email;
+
+    public static String getEmail() {
+        return email;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager2.setAdapter(adapter);
 
         Bundle datos = this.getIntent().getExtras();
-        String email = datos.getString("email");
+        email = datos.getString("email");
         SharedPreferences sesion = getSharedPreferences("sesion", Context.MODE_PRIVATE);
         SharedPreferences.Editor Obj_editor = sesion.edit();
         Obj_editor.putString("email", email);

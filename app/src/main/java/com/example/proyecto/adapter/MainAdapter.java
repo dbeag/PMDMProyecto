@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.proyecto.ProfileFragment;
+
 public class MainAdapter extends FragmentStateAdapter {
     public MainAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -23,11 +25,11 @@ public class MainAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return null;
+        return new ProfileFragment();
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return 1;
     }
 }

@@ -7,4 +7,6 @@
     <string name="app_login">Login</string>
     <string name="app_loginWithGoogle">Login with Google</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="app_welcome">Welcome</string>
+    <string name="app_logout">Logout</string>
 </resources>
