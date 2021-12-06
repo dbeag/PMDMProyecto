@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         adapter = new MainAdapter(fragmentManager, getLifecycle());
         viewPager2.setAdapter(adapter);
+        viewPager2.setUserInputEnabled(false);
 
         Bundle datos = this.getIntent().getExtras();
         email = datos.getString("email");

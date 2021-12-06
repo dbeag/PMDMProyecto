@@ -8,5 +8,6 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="app_welcome">Bienvenido/a</string>
     <string name="app_logout">Cerrar sesión</string>
+    <string name="app_ubicationNotFound">No se ha obtenido la ubicación</string>
 
 </resources>

@@ -14,14 +14,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MapsFragment extends Fragment {
 
@@ -38,18 +43,19 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
             establecerGeoposicionamiento(googleMap);
+            googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         }
     };
 
     private void establecerGeoposicionamiento(GoogleMap googleMap) {
         LatLng location = getCurrentLocation();
         Marker currentPosition;
-        if (location != null){
-            currentPosition = googleMap.addMarker(new MarkerOptions().position(location));
+        if (location != null) {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(22.0f));
+        } else {
+            Toast.makeText(getContext(), R.string.app_ubicationNotFound, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -59,7 +65,7 @@ public class MapsFragment extends Fragment {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (location != null){
+        if (location != null) {
             LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
             return position;
         }
