@@ -32,10 +32,9 @@ public class MainAdapter extends FragmentStateAdapter {
             return new MapsFragment();
         } else if (position == 1){
             return new AddUbicationFragment();
-        } else if (position == 2){
-            return new UbicacionFragment();
+        } else {
+            return new ProfileFragment();
         }
-        return new ProfileFragment();
     }
 
     @Override

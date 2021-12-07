@@ -4,13 +4,13 @@ import com.example.proyecto.MainActivity;
 
 public class Ubicacion {
 
-    private int id;
+    private String id;
     private String email;
     private String nombre;
     private Double latitud;
     private Double longitud;
     private String descripcion;
-    private TipoUbicacion tipoUbicacion;
+    private String TipoUbicacion;
 
     public Ubicacion(String nombre, Double latitud, Double longitud) {
         this.nombre = nombre;
@@ -20,7 +20,7 @@ public class Ubicacion {
 
     public Ubicacion(){
         setEmail(MainActivity.getEmail());
-        setId(MainActivity.lstUbicaciones.size() + 1);
+        setId(MainActivity.getEmail() + "-" + (MainActivity.lstUbicaciones.size() + 1));
     };
 
     public String getNombre() {
@@ -55,12 +55,12 @@ public class Ubicacion {
         this.descripcion = descripcion;
     }
 
-    public TipoUbicacion getTipoUbicacion() {
-        return tipoUbicacion;
+    public String getTipoUbicacion() {
+        return TipoUbicacion;
     }
 
-    public void setTipoUbicacion(TipoUbicacion tipoUbicacion) {
-        this.tipoUbicacion = tipoUbicacion;
+    public void setTipoUbicacion(String String) {
+        this.TipoUbicacion = String;
     }
 
     public String getEmail() {
@@ -71,11 +71,11 @@ public class Ubicacion {
         this.email = email;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

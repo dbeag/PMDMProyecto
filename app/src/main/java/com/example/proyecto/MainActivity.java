@@ -15,11 +15,13 @@ import com.example.proyecto.model.Ubicacion;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
-import com.google.common.collect.Maps;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,11 +42,33 @@ public class MainActivity extends AppCompatActivity {
     public static void guardar(Ubicacion ubication) {
         borrarListas();
         lstUbicaciones.add(ubication);
-        Map<String, Ubicacion> ubicaciones = new HashMap<>();
-        for (Ubicacion ubicacion : lstUbicaciones){
-            ubicaciones.put("ubicacion", ubicacion);
-        }
+        Map<String, String> ubicaciones = new HashMap<>();
+        String ubicacion = jsonEncode(lstUbicaciones);
+        ubicaciones.put("ubicacion", ubicacion);
         db.collection("ubicacion").document(email).set(ubicaciones);
+        MapsFragment.actualizarTodo();
+    }
+
+    private static void jsonDecode(String json) {
+        lstUbicaciones.clear();
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Ubicacion>>(){}.getType();
+        ArrayList<Ubicacion> lstUbicacionesAux = gson.fromJson(json, type);
+        if (lstUbicacionesAux != null) {
+            for (Ubicacion ubicacion : lstUbicacionesAux){
+                if (ubicacion.getEmail().equals(email)){
+                    lstUbicaciones.add(ubicacion);
+                }
+            }
+        }
+        MapsFragment.actualizarTodo();
+    }
+
+    private static String jsonEncode(ArrayList<Ubicacion> lstUbicaciones) {
+        Gson gson = new Gson();
+        String json = gson.toJson(lstUbicaciones);
+        Log.i("LOGJSON", "jsonEncode: " + json);
+        return json;
     }
 
     @Override
@@ -103,17 +127,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void obtenerLista() {
 
-        db.collection("ubicaciones").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("ubicacion").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
                     for (QueryDocumentSnapshot document : task.getResult()){
-                        Ubicacion ubicacion = (Ubicacion) document.get("ubicacion");
-                        if (ubicacion != null) {
-                            if (ubicacion.getEmail().equals(email)) {
-                                lstUbicaciones.add(ubicacion);
-                            }
-                        }
+                        String json = document.getString("ubicacion");
+                        jsonDecode(json);
                     }
                 } else {
                     Log.e("Ubicaciones descargadas", "No se ha encontrado ubicaciones");

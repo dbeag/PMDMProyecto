@@ -75,33 +75,37 @@ public class MapsFragment extends Fragment implements LocationListener {
     }
 
     private static void obtenerMarcadores(GoogleMap googleMapGeneral) {
-        if (MainActivity.lstUbicaciones.size() > 0) {
-            Marker marker = null;
-            for (Ubicacion ubicacion : MainActivity.lstUbicaciones) {
-                switch (ubicacion.getTipoUbicacion()){
-                    case TRABAJO:
-                        marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-                        break;
-                    case PAISAJE:
-                        marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                        break;
-                    case RESTAURANTE:
-                        marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-                        break;
-                    default:
-                        marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
-                        break;
+        if (MainActivity.lstUbicaciones != null) {
+            if (MainActivity.lstUbicaciones.size() > 0) {
+                Marker marker = null;
+                for (Ubicacion ubicacion : MainActivity.lstUbicaciones) {
+                    switch (ubicacion.getTipoUbicacion()) {
+                        case "TRABAJO":
+                            marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                            break;
+                        case "PAISAJE":
+                            marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                            break;
+                        case "RESTAURANTE":
+                            marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                            break;
+                        default:
+                            marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+                            break;
+                    }
+                    lstMarker.add(marker);
                 }
-                lstMarker.add(marker);
             }
         }
     }
 
     private void actualizarMarcadores(GoogleMap googleMap) {
-        if (MainActivity.lstUbicaciones.size() > 0) {
-            for (Ubicacion ubicacion : MainActivity.lstUbicaciones) {
-                Marker marker = googleMap.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())));
-                lstMarker.add(marker);
+        if (MainActivity.lstUbicaciones != null) {
+            if (MainActivity.lstUbicaciones.size() > 0) {
+                for (Ubicacion ubicacion : MainActivity.lstUbicaciones) {
+                    Marker marker = googleMap.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())));
+                    lstMarker.add(marker);
+                }
             }
         }
     }

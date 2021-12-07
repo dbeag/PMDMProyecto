@@ -103,13 +103,13 @@ public class AddUbicationFragment extends Fragment {
                         ubication.setLatitud(latitud);
                         ubication.setLongitud(longitud);
                         if (rbTrabajo.isChecked()) {
-                            ubication.setTipoUbicacion(TipoUbicacion.TRABAJO);
+                            ubication.setTipoUbicacion("TRABAJO");
                         } else if (rbPaisaje.isChecked()) {
-                            ubication.setTipoUbicacion(TipoUbicacion.PAISAJE);
+                            ubication.setTipoUbicacion("PAISAJE");
                         } else if (rbRestaurante.isChecked()) {
-                            ubication.setTipoUbicacion(TipoUbicacion.RESTAURANTE);
+                            ubication.setTipoUbicacion("RESTAURANTE");
                         } else {
-                            ubication.setTipoUbicacion(TipoUbicacion.OTROS);
+                            ubication.setTipoUbicacion("OTROS");
                         }
                     } else {
                         Toast.makeText(getActivity(), R.string.app_namenotset, Toast.LENGTH_SHORT).show();
