@@ -99,21 +99,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etDescripcion" />
 
-    <TextView
-        android:id="@+id/tvLatitud"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="b"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvLongitud"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="a"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvLatitud"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

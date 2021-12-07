@@ -1,7 +1,11 @@
 package com.example.proyecto.model;
 
+import com.example.proyecto.MainActivity;
+
 public class Ubicacion {
 
+    private int id;
+    private String email;
     private String nombre;
     private Double latitud;
     private Double longitud;
@@ -14,7 +18,10 @@ public class Ubicacion {
         this.longitud = longitud;
     }
 
-    public Ubicacion(){};
+    public Ubicacion(){
+        setEmail(MainActivity.getEmail());
+        setId(MainActivity.lstUbicaciones.size() + 1);
+    };
 
     public String getNombre() {
         return nombre;
@@ -55,8 +62,21 @@ public class Ubicacion {
     public void setTipoUbicacion(TipoUbicacion tipoUbicacion) {
         this.tipoUbicacion = tipoUbicacion;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
 
-enum TipoUbicacion{
-    TRABAJO, PAISAJE, RESTAURANTE, OTROS
-}

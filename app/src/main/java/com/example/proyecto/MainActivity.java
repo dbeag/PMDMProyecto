@@ -1,5 +1,6 @@
 package com.example.proyecto;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -7,12 +8,21 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.proyecto.adapter.MainAdapter;
 import com.example.proyecto.model.Ubicacion;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
+import com.google.common.collect.Maps;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,16 +30,30 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     MainAdapter adapter;
     static String email;
+    static FirebaseFirestore db;
 
     public static String getEmail() {
         return email;
     }
-    public static ArrayList<Ubicacion> lstUbicaciones;
+    public static ArrayList<Ubicacion> lstUbicaciones = new ArrayList<>();
+
+    public static void guardar(Ubicacion ubication) {
+        borrarListas();
+        lstUbicaciones.add(ubication);
+        Map<String, Ubicacion> ubicaciones = new HashMap<>();
+        for (Ubicacion ubicacion : lstUbicaciones){
+            ubicaciones.put("ubicacion", ubicacion);
+        }
+        db.collection("ubicacion").document(email).set(ubicaciones);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = FirebaseFirestore.getInstance();
+        obtenerLista();
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.viewPager2);
@@ -75,5 +99,31 @@ public class MainActivity extends AppCompatActivity {
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
         });
+    }
+
+    private void obtenerLista() {
+
+        db.collection("ubicaciones").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()){
+                        Ubicacion ubicacion = (Ubicacion) document.get("ubicacion");
+                        if (ubicacion != null) {
+                            if (ubicacion.getEmail().equals(email)) {
+                                lstUbicaciones.add(ubicacion);
+                            }
+                        }
+                    }
+                } else {
+                    Log.e("Ubicaciones descargadas", "No se ha encontrado ubicaciones");
+                }
+            }
+        });
+        MapsFragment.actualizarTodo();
+    }
+
+    private static void borrarListas(){
+        db.collection("ubicacion").document(email).delete();
     }
 }

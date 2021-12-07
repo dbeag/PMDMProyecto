@@ -5,8 +5,6 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,10 +22,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.proyecto.model.TipoUbicacion;
 import com.example.proyecto.model.Ubicacion;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -45,14 +44,12 @@ public class AddUbicationFragment extends Fragment {
     Button btnSave;
     EditText etName, etDescription;
     RadioGroup rgType;
-    RadioButton rbOtros;
+    RadioButton rbOtros, rbTrabajo, rbPaisaje, rbRestaurante;
     TextView tvLatitud, tvLongitud;
 
     public Ubicacion ubication = new Ubicacion();
     public static Double latitud;
     public static Double longitud;
-    public static LatLng position;
-    public static Location location;
 
     public AddUbicationFragment() {
         // Required empty public constructor
@@ -88,28 +85,40 @@ public class AddUbicationFragment extends Fragment {
         etDescription = view.findViewById(R.id.etDescripcion);
         rgType = view.findViewById(R.id.rgType);
         rbOtros = view.findViewById(R.id.rbOtros);
-        tvLongitud = view.findViewById(R.id.tvLongitud);
-        tvLatitud = view.findViewById(R.id.tvLatitud);
+        rbRestaurante = view.findViewById(R.id.rbRestaurante);
+        rbPaisaje = view.findViewById(R.id.rbPaisaje);
+        rbTrabajo = view.findViewById(R.id.rbTrabajo);
         rbOtros.setChecked(true);
+        agregarLocalizacion(view);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!etName.getText().toString().isEmpty()) {
-                    ubication.setNombre(etName.getText().toString().trim());
-                    if (!etDescription.getText().toString().isEmpty()) {
-                        ubication.setDescripcion(etDescription.getText().toString().trim());
+                if (latitud != null && longitud != null) {
+                    if (!etName.getText().toString().isEmpty()) {
+                        ubication.setNombre(etName.getText().toString().trim());
+                        if (!etDescription.getText().toString().isEmpty()) {
+                            ubication.setDescripcion(etDescription.getText().toString().trim());
+                        }
+                        ubication.setLatitud(latitud);
+                        ubication.setLongitud(longitud);
+                        if (rbTrabajo.isChecked()) {
+                            ubication.setTipoUbicacion(TipoUbicacion.TRABAJO);
+                        } else if (rbPaisaje.isChecked()) {
+                            ubication.setTipoUbicacion(TipoUbicacion.PAISAJE);
+                        } else if (rbRestaurante.isChecked()) {
+                            ubication.setTipoUbicacion(TipoUbicacion.RESTAURANTE);
+                        } else {
+                            ubication.setTipoUbicacion(TipoUbicacion.OTROS);
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), R.string.app_namenotset, Toast.LENGTH_SHORT).show();
                     }
-//                    ubication.setLatitud(Double.parseDouble(tvLatitud.getText().toString()));
-//                    ubication.setLongitud(Double.parseDouble(tvLongitud.getText().toString()));
                 } else {
-                    Toast.makeText(getActivity(), R.string.app_namenotset, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.app_ubicationNotFound, Toast.LENGTH_SHORT).show();
                 }
-//                Log.i("RADIO GROUP", String.valueOf(rgType.getCheckedRadioButtonId()));
-                Log.i("UBICACION", ubication.getNombre());
-                Log.i("UBICACION", ubication.getDescripcion());
-                Log.i("UBICACION", ubication.getLatitud().toString());
-                Log.i("UBICACION", ubication.getLongitud().toString());
+                MapsFragment.actualizarTodo();
+                MainActivity.guardar(ubication);
             }
         });
         return view;
@@ -126,7 +135,7 @@ public class AddUbicationFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
                 Location location = task.getResult();
-                if (location != null){
+                if (location != null) {
                     try {
                         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
                         List<Address> direcciones = geocoder.getFromLocation(
@@ -136,12 +145,12 @@ public class AddUbicationFragment extends Fragment {
                         );
                         Double latitude = direcciones.get(0).getLatitude();
                         Double longitude = direcciones.get(0).getLongitude();
-                        tvLatitud.setText(latitude.toString());
-                        tvLongitud.setText(longitude.toString());
-                        position = new LatLng(Double.parseDouble(tvLatitud.toString()), Double.parseDouble(tvLongitud.toString()));
-                        Log.i("UBICACION", latitude.toString());
-                        Log.i("UBICACION", longitude.toString());
-                    } catch (IOException e){
+                        latitud = latitude;
+                        longitud = longitude;
+//                        position = new LatLng(Double.parseDouble(tvLatitud.toString()), Double.parseDouble(tvLongitud.toString()));
+//                        Log.i("UBICACION", latitude.toString());
+//                        Log.i("UBICACION", longitude.toString());
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
