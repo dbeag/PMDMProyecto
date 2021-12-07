@@ -8,14 +8,21 @@ import androidx.fragment.app.Fragment;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,11 +31,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public class MapsFragment extends Fragment {
+
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -44,33 +57,64 @@ public class MapsFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             establecerGeoposicionamiento(googleMap);
-            googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+//            googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         }
     };
 
     private void establecerGeoposicionamiento(GoogleMap googleMap) {
-        LatLng location = getCurrentLocation();
-        Marker currentPosition;
-        if (location != null) {
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-            googleMap.animateCamera(CameraUpdateFactory.zoomTo(22.0f));
-        } else {
-            Toast.makeText(getContext(), R.string.app_ubicationNotFound, Toast.LENGTH_SHORT).show();
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},44);
+            return;
         }
+        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+
+                Location location = task.getResult();
+                if (location != null) {
+                    try {
+                        // Iniciamos el Geocoder
+                        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+                        // Iniciamos la lista de direcciones
+                        List<Address> direcciones = geocoder.getFromLocation(
+                                location.getLatitude(),
+                                location.getLongitude(),
+                                1
+                        );
+                        Double latitude = direcciones.get(0).getLatitude();
+                        Double longitude = direcciones.get(0).getLongitude();
+                        Log.i("UBICACION", latitude.toString());
+                        Log.i("UBICACION", longitude.toString());
+                        LatLng currentLocation = new LatLng(latitude, longitude);
+                        if (location != null){
+                            Marker currentMarker = googleMap.addMarker(new MarkerOptions().position(currentLocation).title("Current location"));
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 500.0f));
+                        } else {
+                            Toast.makeText(getContext(), R.string.app_ubicationNotFound, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+//        LatLng location2 = getCurrentLocation();
+////        Marker currentPosition;
+//        if (location2 != null) {
+//            googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+////            googleMap.animateCamera(CameraUpdateFactory.zoomTo(22.0f));
+//        } else {
+//            Toast.makeText(getContext(), R.string.app_ubicationNotFound, Toast.LENGTH_SHORT).show();
+//        }
     }
 
-    private LatLng getCurrentLocation() {
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-        }
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (location != null) {
-            LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
-            return position;
-        }
-        return null;
-    }
+//    private LatLng getCurrentLocation() {
+//
+//    }
 
     @Nullable
     @Override
