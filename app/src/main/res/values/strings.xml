@@ -9,5 +9,14 @@
     <string name="app_welcome">Bienvenido/a</string>
     <string name="app_logout">Cerrar sesión</string>
     <string name="app_ubicationNotFound">No se ha obtenido la ubicación</string>
-
+    <string name="app_addUbication">Añadir ubicación</string>
+    <string name="app_ubicationName">Nombre</string>
+    <string name="app_ubicationType">Tipo de ubicación</string>
+    <string name="app_work">Trabajo</string>
+    <string name="app_paisaje">Paisaje</string>
+    <string name="app_restaurante">Restaurante</string>
+    <string name="app_otros">Otro</string>
+    <string name="app_description">Descripción</string>
+    <string name="app_save">Guardar</string>
+    <string name="app_namenotset">Debes introduir un nombre</string>
 </resources>

@@ -10,4 +10,14 @@
     <string name="app_welcome">Welcome</string>
     <string name="app_logout">Logout</string>
     <string name="app_ubicationNotFound">Ubication not found</string>
+    <string name="app_addUbication">Add ubication</string>
+    <string name="app_ubicationName">Name</string>
+    <string name="app_ubicationType">Ubication type</string>
+    <string name="app_work">Work</string>
+    <string name="app_paisaje">Landscape</string>
+    <string name="app_restaurante">Restaurant</string>
+    <string name="app_otros">Other</string>
+    <string name="app_description">Description</string>
+    <string name="app_save">Save</string>
+    <string name="app_namenotset">You must enter a name</string>
 </resources>

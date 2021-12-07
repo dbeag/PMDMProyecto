@@ -9,7 +9,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.proyecto.adapter.MainAdapter;
+import com.example.proyecto.model.Ubicacion;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public static String getEmail() {
         return email;
     }
+    public static ArrayList<Ubicacion> lstUbicaciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

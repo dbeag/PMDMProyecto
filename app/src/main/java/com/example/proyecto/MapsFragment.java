@@ -59,6 +59,8 @@ public class MapsFragment extends Fragment {
             establecerGeoposicionamiento(googleMap);
 //            googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         }
+
+
     };
 
     private void establecerGeoposicionamiento(GoogleMap googleMap) {
@@ -75,9 +77,7 @@ public class MapsFragment extends Fragment {
                 Location location = task.getResult();
                 if (location != null) {
                     try {
-                        // Iniciamos el Geocoder
                         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-                        // Iniciamos la lista de direcciones
                         List<Address> direcciones = geocoder.getFromLocation(
                                 location.getLatitude(),
                                 location.getLongitude(),
@@ -88,7 +88,7 @@ public class MapsFragment extends Fragment {
                         Log.i("UBICACION", latitude.toString());
                         Log.i("UBICACION", longitude.toString());
                         LatLng currentLocation = new LatLng(latitude, longitude);
-                        if (location != null) {
+                        if (currentLocation != null) {
                             Marker currentMarker = googleMap.addMarker(new MarkerOptions().position(currentLocation).title("Current location"));
                             googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
                             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15.0f));
