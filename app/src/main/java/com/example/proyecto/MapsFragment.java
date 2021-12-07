@@ -71,7 +71,14 @@ public class MapsFragment extends Fragment implements LocationListener {
     };
 
     public static void actualizarTodo() {
+        eliminarMarcadores(googleMapGeneral);
         obtenerMarcadores(googleMapGeneral);
+    }
+
+    private static void eliminarMarcadores(GoogleMap googleMapGeneral) {
+        for (Marker marker : lstMarker){
+            marker.remove();
+        }
     }
 
     private static void obtenerMarcadores(GoogleMap googleMapGeneral) {

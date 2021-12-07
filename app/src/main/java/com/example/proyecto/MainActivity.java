@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private static void jsonDecode(String json) {
-        lstUbicaciones.clear();
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Ubicacion>>(){}.getType();
         ArrayList<Ubicacion> lstUbicacionesAux = gson.fromJson(json, type);
@@ -61,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        MapsFragment.actualizarTodo();
     }
 
     private static String jsonEncode(ArrayList<Ubicacion> lstUbicaciones) {
@@ -126,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void obtenerLista() {
-
+        lstUbicaciones.clear();
         db.collection("ubicacion").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -135,12 +133,12 @@ public class MainActivity extends AppCompatActivity {
                         String json = document.getString("ubicacion");
                         jsonDecode(json);
                     }
+                    MapsFragment.actualizarTodo();
                 } else {
                     Log.e("Ubicaciones descargadas", "No se ha encontrado ubicaciones");
                 }
             }
         });
-        MapsFragment.actualizarTodo();
     }
 
     private static void borrarListas(){
