@@ -65,7 +65,7 @@ public class MapsFragment extends Fragment {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},44);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
             return;
         }
         fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
@@ -88,10 +88,11 @@ public class MapsFragment extends Fragment {
                         Log.i("UBICACION", latitude.toString());
                         Log.i("UBICACION", longitude.toString());
                         LatLng currentLocation = new LatLng(latitude, longitude);
-                        if (location != null){
+                        if (location != null) {
                             Marker currentMarker = googleMap.addMarker(new MarkerOptions().position(currentLocation).title("Current location"));
                             googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 500.0f));
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15.0f));
+                            googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                         } else {
                             Toast.makeText(getContext(), R.string.app_ubicationNotFound, Toast.LENGTH_SHORT).show();
                         }
@@ -102,19 +103,7 @@ public class MapsFragment extends Fragment {
                 }
             }
         });
-//        LatLng location2 = getCurrentLocation();
-////        Marker currentPosition;
-//        if (location2 != null) {
-//            googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-////            googleMap.animateCamera(CameraUpdateFactory.zoomTo(22.0f));
-//        } else {
-//            Toast.makeText(getContext(), R.string.app_ubicationNotFound, Toast.LENGTH_SHORT).show();
-//        }
     }
-
-//    private LatLng getCurrentLocation() {
-//
-//    }
 
     @Nullable
     @Override
