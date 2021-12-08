@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void obtenerLista() {
+    private static void obtenerLista() {
         lstUbicaciones.clear();
         db.collection("ubicacion").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

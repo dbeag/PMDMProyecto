@@ -44,7 +44,7 @@ public class AddUbicationFragment extends Fragment {
     RadioButton rbOtros, rbTrabajo, rbPaisaje, rbOcio;
     TextView tvLatitud, tvLongitud;
 
-    public Ubicacion ubication = new Ubicacion();
+    public Ubicacion ubication;
     public static Double latitud;
     public static Double longitud;
 
@@ -93,6 +93,7 @@ public class AddUbicationFragment extends Fragment {
             public void onClick(View v) {
                 if (latitud != null && longitud != null) {
                     if (!etName.getText().toString().isEmpty()) {
+                        ubication = new Ubicacion();
                         ubication.setNombre(etName.getText().toString().trim());
                         if (!etDescription.getText().toString().isEmpty()) {
                             ubication.setDescripcion(etDescription.getText().toString().trim());
