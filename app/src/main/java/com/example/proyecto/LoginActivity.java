@@ -145,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                         goMain(email);
                     } else {
                         Log.i("FIREBASE LOGIN", "Login incorrecto", task.getException());
-                        Toast.makeText(LoginActivity.this, "Datos incorrectos", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, R.string.app_incorrectData, Toast.LENGTH_SHORT).show();
                     }
                 }
             });

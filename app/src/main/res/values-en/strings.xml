@@ -24,4 +24,5 @@
     <string name="app_correcto">Location saved successfully</string>
     <string name="app_campos">You must fill in the 2 fields to continue</string>
     <string name="app_registersucessfully">User successfully registered</string>
+    <string name="app_incorrectData">Incorrect data</string>
 </resources>
