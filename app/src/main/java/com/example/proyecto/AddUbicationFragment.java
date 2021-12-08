@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +21,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.proyecto.model.TipoUbicacion;
 import com.example.proyecto.model.Ubicacion;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -44,7 +41,7 @@ public class AddUbicationFragment extends Fragment {
     Button btnSave;
     EditText etName, etDescription;
     RadioGroup rgType;
-    RadioButton rbOtros, rbTrabajo, rbPaisaje, rbRestaurante;
+    RadioButton rbOtros, rbTrabajo, rbPaisaje, rbOcio;
     TextView tvLatitud, tvLongitud;
 
     public Ubicacion ubication = new Ubicacion();
@@ -85,7 +82,7 @@ public class AddUbicationFragment extends Fragment {
         etDescription = view.findViewById(R.id.etDescripcion);
         rgType = view.findViewById(R.id.rgType);
         rbOtros = view.findViewById(R.id.rbOtros);
-        rbRestaurante = view.findViewById(R.id.rbRestaurante);
+        rbOcio = view.findViewById(R.id.rbOcio);
         rbPaisaje = view.findViewById(R.id.rbPaisaje);
         rbTrabajo = view.findViewById(R.id.rbTrabajo);
         rbOtros.setChecked(true);
@@ -106,19 +103,23 @@ public class AddUbicationFragment extends Fragment {
                             ubication.setTipoUbicacion("TRABAJO");
                         } else if (rbPaisaje.isChecked()) {
                             ubication.setTipoUbicacion("PAISAJE");
-                        } else if (rbRestaurante.isChecked()) {
-                            ubication.setTipoUbicacion("RESTAURANTE");
+                        } else if (rbOcio.isChecked()) {
+                            ubication.setTipoUbicacion("OCIO");
                         } else {
-                            ubication.setTipoUbicacion("OTROS");
+                            ubication.setTipoUbicacion("OTRO");
                         }
+                        MapsFragment.actualizarTodo();
+                        MainActivity.guardar(ubication);
+                        Toast.makeText(getActivity(), R.string.app_correcto, Toast.LENGTH_SHORT).show();
+                        rbOtros.setChecked(true);
+                        etDescription.setText("");
+                        etName.setText("");
                     } else {
                         Toast.makeText(getActivity(), R.string.app_namenotset, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getContext(), R.string.app_ubicationNotFound, Toast.LENGTH_SHORT).show();
                 }
-                MapsFragment.actualizarTodo();
-                MainActivity.guardar(ubication);
             }
         });
         return view;

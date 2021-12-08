@@ -1,5 +1,7 @@
 package com.example.proyecto.adapter;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -30,15 +32,16 @@ public class MainAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         if (position == 0){
             return new MapsFragment();
-        } else if (position == 1){
+        } else if (position == 1) {
             return new AddUbicationFragment();
-        } else {
-            return new ProfileFragment();
+        } else if (position == 2){
+            return new UbicacionFragment();
         }
+        return new ProfileFragment();
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

@@ -64,10 +64,10 @@
             android:text="@string/app_paisaje" />
 
         <RadioButton
-            android:id="@+id/rbRestaurante"
+            android:id="@+id/rbOcio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_restaurante" />
+            android:text="@string/app_ocio" />
 
         <RadioButton
             android:id="@+id/rbOtros"

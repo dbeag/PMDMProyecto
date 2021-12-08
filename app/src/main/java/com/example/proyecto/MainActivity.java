@@ -49,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
         MapsFragment.actualizarTodo();
     }
 
+    public static void actualizar() {
+        borrarListas();
+        Map<String, String> ubicaciones = new HashMap<>();
+        String ubicacion = jsonEncode(lstUbicaciones);
+        ubicaciones.put("ubicacion", ubicacion);
+        db.collection("ubicacion").document(email).set(ubicaciones);
+        MapsFragment.actualizarTodo();
+    }
+
     private static void jsonDecode(String json) {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Ubicacion>>(){}.getType();
@@ -101,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                Log.i("TAB TABLAYOUT", "onTabSelected: " + tab.getPosition());
                 viewPager2.setCurrentItem(tab.getPosition());
             }
 
@@ -111,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                viewPager2.setCurrentItem(tab.getPosition());
             }
         });
 

@@ -140,6 +140,8 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Log.i("FIREBASE LOGIN", "Login correcto");
                         FirebaseUser user = mAuth.getCurrentUser();
+                        etEmail.setText("");
+                        etPassword.setText("");
                         goMain(email);
                     } else {
                         Log.i("FIREBASE LOGIN", "Login incorrecto", task.getException());
@@ -148,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "Debes rellenar los 2 campos para continuar", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, R.string.app_campos, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -162,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Log.i("FIREBASE REGISTER", "Se ha registrado correctamente");
-                        Toast.makeText(LoginActivity.this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, R.string.app_registersucessfully, Toast.LENGTH_SHORT).show();
                         FirebaseUser user = mAuth.getCurrentUser();
                     } else {
                         Log.i("FIREBASE REGISTER", "Ha ocurrido un error al registrar", task.getException());
@@ -171,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(LoginActivity.this, "Debe rellenar los 2 campos para registrarse", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, R.string.app_campos, Toast.LENGTH_SHORT).show();
             Log.i("FIREBASE REGISTER", "No se han rellenado los 2 campos");
         }
     }

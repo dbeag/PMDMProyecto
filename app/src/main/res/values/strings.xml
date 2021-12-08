@@ -14,9 +14,13 @@
     <string name="app_ubicationType">Tipo de ubicación</string>
     <string name="app_work">Trabajo</string>
     <string name="app_paisaje">Paisaje</string>
-    <string name="app_restaurante">Restaurante</string>
+    <string name="app_ocio">Ocio</string>
     <string name="app_otros">Otro</string>
     <string name="app_description">Descripción</string>
     <string name="app_save">Guardar</string>
     <string name="app_namenotset">Debes introduir un nombre</string>
+    <string name="app_changes">La lista se actualizará al reiniciar la app</string>
+    <string name="app_correcto">Ubicación guardada correctamente</string>
+    <string name="app_campos">Debes rellenar los 2 campos para continuar</string>
+    <string name="app_registersucessfully">Usuario registrado correctamente</string>
 </resources>

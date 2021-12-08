@@ -93,7 +93,7 @@ public class MapsFragment extends Fragment implements LocationListener {
                         case "PAISAJE":
                             marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                             break;
-                        case "RESTAURANTE":
+                        case "OCIO":
                             marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
                             break;
                         default:

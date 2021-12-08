@@ -11,13 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.example.proyecto.placeholder.PlaceholderContent;
+import com.example.proyecto.adapter.MyUbicacionRecyclerViewAdapter;
 
 /**
  * A fragment representing a list of Items.
  */
 public class UbicacionFragment extends Fragment {
+
+    RecyclerView recyclerView;
+    MyUbicacionRecyclerViewAdapter adapter;
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -54,6 +58,8 @@ public class UbicacionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ubicacion_list, container, false);
+        view.findViewById(R.id.btnRemove);
+
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -64,7 +70,8 @@ public class UbicacionFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyUbicacionRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            adapter = new MyUbicacionRecyclerViewAdapter(getActivity(), MainActivity.lstUbicaciones);
+            recyclerView.setAdapter(adapter);
         }
         return view;
     }

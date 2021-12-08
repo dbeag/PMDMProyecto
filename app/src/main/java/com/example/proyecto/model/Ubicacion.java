@@ -12,12 +12,6 @@ public class Ubicacion {
     private String descripcion;
     private String TipoUbicacion;
 
-    public Ubicacion(String nombre, Double latitud, Double longitud) {
-        this.nombre = nombre;
-        this.latitud = latitud;
-        this.longitud = longitud;
-    }
-
     public Ubicacion(){
         setEmail(MainActivity.getEmail());
         setId(MainActivity.getEmail() + "-" + (MainActivity.lstUbicaciones.size() + 1));
