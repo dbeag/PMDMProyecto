@@ -46,15 +46,6 @@ public class MyUbicacionRecyclerViewAdapter extends RecyclerView.Adapter<MyUbica
         } else {
             holder.tvDescription.setText(R.string.app_noDescription);
         }
-        holder.btnRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.lstUbicaciones.remove(holder.mItem);
-                MainActivity.actualizar();
-                MapsFragment.actualizarTodo();
-                Toast.makeText(v.getContext(), R.string.app_changes, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -66,14 +57,12 @@ public class MyUbicacionRecyclerViewAdapter extends RecyclerView.Adapter<MyUbica
         public final TextView tvName;
         public final TextView tvType;
         public Ubicacion mItem;
-        public final Button btnRemove;
         public final TextView tvDescription;
 
         public ViewHolder(FragmentUbicacionItemBinding binding) {
             super(binding.getRoot());
             tvName = binding.tvName;
             tvType = binding.tvType;
-            btnRemove = binding.btnRemove;
             tvDescription = binding.tvDescription;
         }
 

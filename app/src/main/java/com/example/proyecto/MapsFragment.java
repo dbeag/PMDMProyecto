@@ -87,13 +87,16 @@ public class MapsFragment extends Fragment implements LocationListener {
                 Marker marker = null;
                 for (Ubicacion ubicacion : MainActivity.lstUbicaciones) {
                     switch (ubicacion.getTipoUbicacion()) {
-                        case "TRABAJO":
+                        case "Trabajo":
+                        case "Work":
                             marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
                             break;
-                        case "PAISAJE":
+                        case "Paisaje":
+                        case "Landscape":
                             marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                             break;
-                        case "OCIO":
+                        case "Ocio":
+                        case "Leisure":
                             marker = googleMapGeneral.addMarker(new MarkerOptions().title(ubicacion.getNombre()).position(new LatLng(ubicacion.getLatitud(), ubicacion.getLongitud())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
                             break;
                         default:

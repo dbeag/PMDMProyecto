@@ -58,7 +58,6 @@ public class UbicacionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ubicacion_list, container, false);
-        view.findViewById(R.id.btnRemove);
 
 
         // Set the adapter

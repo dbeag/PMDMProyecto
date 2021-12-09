@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,6 @@ public class AddUbicationFragment extends Fragment {
     EditText etName, etDescription;
     RadioGroup rgType;
     RadioButton rbOtros, rbTrabajo, rbPaisaje, rbOcio;
-    TextView tvLatitud, tvLongitud;
 
     public Ubicacion ubication;
     public static Double latitud;
@@ -101,13 +101,13 @@ public class AddUbicationFragment extends Fragment {
                         ubication.setLatitud(latitud);
                         ubication.setLongitud(longitud);
                         if (rbTrabajo.isChecked()) {
-                            ubication.setTipoUbicacion("TRABAJO");
+                            ubication.setTipoUbicacion(getResources().getString(R.string.app_work));
                         } else if (rbPaisaje.isChecked()) {
-                            ubication.setTipoUbicacion("PAISAJE");
+                            ubication.setTipoUbicacion(getResources().getString(R.string.app_paisaje));
                         } else if (rbOcio.isChecked()) {
-                            ubication.setTipoUbicacion("OCIO");
+                            ubication.setTipoUbicacion(getResources().getString(R.string.app_ocio));
                         } else {
-                            ubication.setTipoUbicacion("OTRO");
+                            ubication.setTipoUbicacion(getResources().getString(R.string.app_otros));
                         }
                         MapsFragment.actualizarTodo();
                         MainActivity.guardar(ubication);
@@ -149,9 +149,6 @@ public class AddUbicationFragment extends Fragment {
                         Double longitude = direcciones.get(0).getLongitude();
                         latitud = latitude;
                         longitud = longitude;
-//                        position = new LatLng(Double.parseDouble(tvLatitud.toString()), Double.parseDouble(tvLongitud.toString()));
-//                        Log.i("UBICACION", latitude.toString());
-//                        Log.i("UBICACION", longitude.toString());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
