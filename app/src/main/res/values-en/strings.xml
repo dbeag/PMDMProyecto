@@ -25,5 +25,5 @@
     <string name="app_campos">You must fill in the 2 fields to continue</string>
     <string name="app_registersucessfully">User successfully registered</string>
     <string name="app_incorrectData">Incorrect data</string>
-    <string name="app_noDescription">Esta ubicacición no posee descripción</string>
+    <string name="app_noDescription">This location has no description</string>
 </resources>
