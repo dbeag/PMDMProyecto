@@ -44,7 +44,7 @@ public class MyUbicacionRecyclerViewAdapter extends RecyclerView.Adapter<MyUbica
         if (mValues.get(position).getDescripcion() != null) {
             holder.tvDescription.setText(mValues.get(position).getDescripcion());
         } else {
-            holder.tvDescription.setText("");
+            holder.tvDescription.setText(R.string.app_noDescription);
         }
         holder.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override

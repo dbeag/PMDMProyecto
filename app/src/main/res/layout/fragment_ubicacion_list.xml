@@ -10,5 +10,5 @@
     tools:context=".UbicacionFragment"
     android:paddingTop="20dp"
     tools:listitem="@layout/fragment_ubicacion_item"
-    android:background="@color/light_green"
+    android:background="@color/green"
     android:fitsSystemWindows="true"/>

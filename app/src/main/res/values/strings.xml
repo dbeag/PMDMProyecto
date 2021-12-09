@@ -24,4 +24,5 @@
     <string name="app_campos">Debes rellenar los 2 campos para continuar</string>
     <string name="app_registersucessfully">Usuario registrado correctamente</string>
     <string name="app_incorrectData">Datos incorrectos</string>
+    <string name="app_noDescription">Esta ubicacición no posee descripción</string>
 </resources>
